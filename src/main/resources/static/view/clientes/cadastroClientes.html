@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="jumbotron shadow p-3 mb-5 rounded">
+        <form name="clienteForm"></form>
+            <input class="form-control" ng-model="cliente.nome" name="nome" type="text" placeholder="Nome"/>
+            <input class="form-control" ng-model="cliente.inscricao" name="inscricao" type="text" placeholder="Inscrição"/>
+            <div class="box-telefone" ng-repeat="telefone in cadastroTelefones" remove-click>
+                <input ng-show="!telefone.removido" class="form-control input-ddd" type="text" placeholder="DDD"/>
+                <input ng-show="!telefone.removido" class="form-control input-numero" type="text" placeholder="Numero"/>
+                <input ng-show="!telefone.removido" class="form-control input-operadora" type="text" placeholder="Operadora"/>
+                <button ng-show="!telefone.removido" class="btn btn-outline-primary btn-telefones" ng-click="remove(telefone)" data-toggle="modal" data-target="#exampleModal">
+                    <img src="../../lib/bootstrap-icons-1.0.0/x-circle.svg" alt="" title="Bootstrap">
+                </button>
+            </div>
+            <button class="btn btn-block" ng-click="adicionarNovoTelefone()" data-toggle="modal" data-target="#exampleModal">
+                Adicionar Telefone <img src="../../lib/bootstrap-icons-1.0.0/plus-circle.svg" alt="" title="Bootstrap">
+            </button>
+            <div class="box-endereco" ng-repeat="endereco in cadastroEnderecos" remove-click>
+                <input ng-show="!endereco.removido" class="form-control input-estado" type="text" placeholder="Estado"/>
+                <input ng-show="!endereco.removido" class="form-control input-municipio" type="text" placeholder="Municipio"/>
+                <input ng-show="!endereco.removido" class="form-control input-cep" type="text" placeholder="CEP"/>
+                <input ng-show="!endereco.removido" class="form-control input-bairro" type="text" placeholder="Bairro"/>
+                <input ng-show="!endereco.removido" class="form-control input-rua" type="text" placeholder="Rua"/>
+                <button ng-show="!endereco.removido" class="btn btn-outline-primary btn-telefones" ng-click="remove(endereco)" data-toggle="modal" data-target="#exampleModal">
+                    <img src="../../lib/bootstrap-icons-1.0.0/x-circle.svg" alt="" title="Bootstrap">
+                </button>
+            </div>
+            <button class="btn btn-block" ng-click="adicionarNovoEndereco()" data-toggle="modal" data-target="#exampleModal">
+                Adicionar Endereço<img src="../../lib/bootstrap-icons-1.0.0/plus-circle.svg" alt="" title="Bootstrap">
+            </button>
+        </form>
+        <hr class="hr-color"/>
+        <button class="btn btn-block" ng-click="salvarCliente(cliente)">Salvar</button>
+        <a class="btn btn-block" href="#!/listaClientes">Voltar</a>
+    </div>

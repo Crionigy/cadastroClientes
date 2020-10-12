@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="jumbotron shadow p-3 mb-5 rounded">
+        <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="Pesquisar telefones"/>
+        <table class="table">
+            <div class="container-fluid">
+            <tr>
+                <th class="tb-header"></th>
+                <th class="tb-header"></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('ddd')">DDD</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('numero_telefone')">Numero</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('operadora')">Operadora</a></th>
+            </tr>
+            <tr ng-class="{selected: telefone.selecionado}" ng-repeat="telefone in telefones | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
+                <td>
+                    <button class="btn btn-outline-primary" ng-click="editarTelefone(telefone)">
+                        <img src="../../lib/bootstrap-icons-1.0.0/pencil.svg" alt="" title="Bootstrap">
+                    </button>
+                </td>
+                <td class="form-check tb-columns">
+                    <input type="checkbox" ng-model="telefone.selecionado">
+                </td>
+                <td class="tb-columns">{{telefone.ddd}}</td>
+                <td class="tb-columns">{{telefone.numero_telefone}}</td>
+                <td class="tb-columns">{{telefone.operadora}}</td>
+            </tr>
+            </div>
+        </table>
+        <hr class="hr-color"/>
+        <button class="btn btn-block" ng-click="apagarTelefones(telefones)" ng-disabled="isTelefonesSelecionado(telefones)">Remover Telefones</button>
+    </div>
+</div>

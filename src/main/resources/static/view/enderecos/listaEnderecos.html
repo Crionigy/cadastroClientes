@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="jumbotron shadow p-3 mb-5 rounded">
+        <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="Pesquisar endereços"/>
+        <table class="table">
+            <div class="container-fluid">
+            <tr>
+                <th class="tb-header"></th>
+                <th class="tb-header"></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('bairro')">Bairro</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('cep')">CEP</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('estado')">Estado</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('municipio')">Municipio</a></th>
+                <th class="tb-header"><a href="" ng-click="ordenarPor('rua')">Rua</a></th>
+            </tr>
+            <tr ng-class="{selected: endereco.selecionado}" ng-repeat="endereco in enderecos | filter:criterioDeBusca | orderBy:criterioDeOrdenacao:direcaoDaOrdenacao">
+                <td>
+                    <button class="btn btn-outline-primary" ng-click="editarEndereco(endereco)">
+                        <img src="../../lib/bootstrap-icons-1.0.0/pencil.svg" alt="" title="Bootstrap">
+                    </button>
+                </td>
+                <td class="form-check tb-columns">
+                    <input type="checkbox" ng-model="endereco.selecionado">
+                </td>
+                <td class="tb-columns">{{endereco.bairro}}</td>
+                <td class="tb-columns">{{endereco.cep}}</td>
+                <td class="tb-columns">{{endereco.estado}}</td>
+                <td class="tb-columns">{{endereco.municipio}}</td>
+                <td class="tb-columns">{{endereco.rua}}</td>
+            </tr>
+            </div>
+        </table>
+        <hr class="hr-color"/>
+        <button class="btn btn-block" ng-click="apagarEnderecos(enderecos)" ng-disabled="isEnderecosSelecionado(enderecos)">Remover Endereços</button>
+    </div>
+</div>

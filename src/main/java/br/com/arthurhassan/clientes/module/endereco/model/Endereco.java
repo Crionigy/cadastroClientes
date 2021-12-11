@@ -1,25 +1,25 @@
 package br.com.arthurhassan.clientes.module.endereco.model;
 
+
+import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import br.com.arthurhassan.clientes.module.cliente.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.Objects;
+import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "ENDERECOS")
-@Table(name = "ENDERECOS")
-@SequenceGenerator(allocationSize = 1, name = "SEQ_ENDERECO", sequenceName = "SEQ_ENDERECO")
-public class Endereco {
+public class Endereco extends GenericEntityImpl<Long> {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="ID_ENDERECO")
-    @GeneratedValue(generator = "SEQ_ENDERECO", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="CEP")
@@ -37,11 +37,13 @@ public class Endereco {
     @Column(name="ESTADO")
     private String estado;
 
+    @NotNull
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id", nullable=false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -105,20 +107,6 @@ public class Endereco {
         this.municipio = municipio;
         this.estado = estado;
         this.cliente = cliente;
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Endereco endereco = (Endereco) o;
-        return id.equals(endereco.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
     @Override

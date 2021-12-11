@@ -1,9 +1,8 @@
 package br.com.arthurhassan.clientes.module.cliente.model;
 
-import br.com.arthurhassan.clientes.core.generic.Entity.GenericEntityImpl;
+import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import br.com.arthurhassan.clientes.module.endereco.model.Endereco;
 import br.com.arthurhassan.clientes.module.telefone.model.Telefone;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -16,15 +15,13 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CLIENTES")
-@Table(name = "CLIENTES")
-@SequenceGenerator(allocationSize = 1, name = "SEQ_CLIENTE", sequenceName = "SEQ_CLIENTE")
 public class Cliente extends GenericEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name="CLIENTE_ID")
-    @GeneratedValue(generator = "SEQ_CLIENTE", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="NOME")
@@ -33,17 +30,16 @@ public class Cliente extends GenericEntityImpl<Long> {
     @Column(name="INSCRICAO_CLIENTE")
     private String inscricao;
 
-    @JsonProperty("telefones")
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private Set<Telefone> telefones = new HashSet<Telefone>();
 
-    @JsonProperty("enderecos")
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private Set<Endereco> enderecos = new HashSet<Endereco>();
 
     //Getters & Setters
+    @Override
     public Long getId() {
         return id;
     }
@@ -95,13 +91,14 @@ public class Cliente extends GenericEntityImpl<Long> {
     }
 
     //Overrides
-
     @Override
     public String toString() {
         return "Cliente{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", inscricao='" + inscricao + '\'' +
+                ", telefones=" + telefones +
+                ", enderecos=" + enderecos +
                 '}';
     }
 }

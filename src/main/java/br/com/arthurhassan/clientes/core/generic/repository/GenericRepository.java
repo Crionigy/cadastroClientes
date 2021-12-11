@@ -1,6 +1,6 @@
 package br.com.arthurhassan.clientes.core.generic.repository;
 
-import br.com.arthurhassan.clientes.core.generic.Entity.GenericEntityImpl;
+import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 

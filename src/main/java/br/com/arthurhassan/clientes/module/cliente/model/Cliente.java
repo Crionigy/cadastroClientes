@@ -3,6 +3,7 @@ package br.com.arthurhassan.clientes.module.cliente.model;
 import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import br.com.arthurhassan.clientes.module.endereco.model.Endereco;
 import br.com.arthurhassan.clientes.module.telefone.model.Telefone;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
@@ -15,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CLIENTES")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Cliente extends GenericEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -88,6 +90,11 @@ public class Cliente extends GenericEntityImpl<Long> {
     public Cliente(String nome, String inscricao) {
         this.nome = nome;
         this.inscricao = inscricao;
+    }
+
+    public Cliente(Cliente newCliente) {
+       this.nome = newCliente.getNome();
+       this.inscricao = newCliente.getInscricao();
     }
 
     //Overrides

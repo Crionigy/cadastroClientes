@@ -2,11 +2,12 @@ package br.com.arthurhassan.clientes.core.generic.service;
 
 import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import br.com.arthurhassan.clientes.core.generic.repository.GenericRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -35,9 +36,11 @@ public abstract class GenericServiceImpl<T extends GenericEntityImpl<PK>, PK> im
     }
 
     @Override
-    public T update(T entity) {
-        entity.setAudDthAtu(Calendar.getInstance());
-        return genericRepository.save(entity);
+    public T update(T entity) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        T updatedEntetity = findById(entity.getId());
+        objectMapper.readerForUpdating(updatedEntetity).readValue(objectMapper.writeValueAsString(entity));
+        return genericRepository.save(updatedEntetity);
     }
 
     @Override
@@ -47,19 +50,20 @@ public abstract class GenericServiceImpl<T extends GenericEntityImpl<PK>, PK> im
     }
 
     @Override
-    public void delete(PK id) {
+    public void deleteOne(PK id) {
         T entity = findById(id);
         genericRepository.delete(entity);
     }
 
     @Override
-    public void delete(List<T> entity) {
-
+    public void deleteAll(List<PK> entity) {
+        List<T> toDeleteEntitys = genericRepository.findAllById(entity);
+        genericRepository.deleteAll(toDeleteEntitys);
     }
 
     @Override
-    public int count(T entity) {
-        return 0;
+    public long count(T entity) {
+        return genericRepository.count();
     }
 
 }

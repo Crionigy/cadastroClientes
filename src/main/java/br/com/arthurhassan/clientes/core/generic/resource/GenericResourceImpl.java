@@ -73,25 +73,25 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
 
     @Override
     @DeleteMapping(path="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> delete(@PathVariable("id") PK id) {
+    public ResponseEntity<String> deleteOne(@PathVariable("id") PK id) {
         try {
-            genericService.delete(id);
+            genericService.deleteOne(id);
             return new ResponseEntity("Sucesso ao apagar!", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity("Erro ao apagar!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Erro ao apagar! - ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
     @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> delete(@RequestBody List<T> entity){
+    public ResponseEntity<String> deleteAll(@RequestBody List<PK> entityIds){
         try {
-            genericService.delete(entity);
+            genericService.deleteAll(entityIds);
             return new ResponseEntity("Sucesso ao apagar!", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity("Erro ao apagar!", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Erro ao apagar! - ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -17,7 +17,7 @@ public interface GenericResource<T extends GenericEntityImpl<PK>, PK>{
 
     ResponseEntity update(@RequestBody T entity);
 
-    ResponseEntity delete(@PathVariable("id") PK id);
+    ResponseEntity deleteOne(@PathVariable("id") PK id);
 
-    ResponseEntity delete(@RequestBody List<T> entity);
+    ResponseEntity deleteAll(@RequestBody List<PK> entity);
 }

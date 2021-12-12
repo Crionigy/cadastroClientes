@@ -1,7 +1,6 @@
 package br.com.arthurhassan.clientes.core.generic.entity;
 
 import br.com.arthurhassan.clientes.module.cliente.model.Cliente;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -10,7 +9,7 @@ import java.util.Calendar;
 import java.util.Objects;
 
 @MappedSuperclass
-@JsonIgnoreProperties({"delete", "audDthInc", "audDthAtu"})
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GenericEntityImpl<PK> implements GenericEntity<PK>, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,9 +53,6 @@ public class GenericEntityImpl<PK> implements GenericEntity<PK>, Serializable {
     public void setAudDthInc(Calendar audDthInc) {
         this.audDthInc = audDthInc;
     }
-
-    @Transient
-    private boolean delete = false;
 
     @Override
     public boolean equals(Object o) {

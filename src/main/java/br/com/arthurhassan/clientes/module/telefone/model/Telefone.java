@@ -3,6 +3,7 @@ package br.com.arthurhassan.clientes.module.telefone.model;
 import br.com.arthurhassan.clientes.core.generic.entity.GenericEntityImpl;
 import br.com.arthurhassan.clientes.module.cliente.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "TELEFONES")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Telefone extends GenericEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;

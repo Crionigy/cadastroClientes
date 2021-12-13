@@ -1,0 +1,22 @@
+version: '3.4'
+
+networks:
+  teste_network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: spring-test:latest
+    ports:
+      - 8080:8080
+    networks:
+      teste_network: { }
+    extra_hosts:
+      - "host.docker.internal:5432"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/cadastroClientes
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin

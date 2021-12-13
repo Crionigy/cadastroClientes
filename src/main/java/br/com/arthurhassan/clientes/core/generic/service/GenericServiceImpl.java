@@ -40,6 +40,7 @@ public abstract class GenericServiceImpl<T extends GenericEntityImpl<PK>, PK> im
         ObjectMapper objectMapper = new ObjectMapper();
         T updatedEntetity = findById(entity.getId());
         objectMapper.readerForUpdating(updatedEntetity).readValue(objectMapper.writeValueAsString(entity));
+        updatedEntetity.setAudDthAtu(Calendar.getInstance());
         return genericRepository.save(updatedEntetity);
     }
 

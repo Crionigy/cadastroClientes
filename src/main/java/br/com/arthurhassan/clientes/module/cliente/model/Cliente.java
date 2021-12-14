@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "CLIENTES")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "telefones", "enderecos"})
 public class Cliente extends GenericEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -32,11 +32,11 @@ public class Cliente extends GenericEntityImpl<Long> {
     @Column(name="INSCRICAO_CLIENTE")
     private String inscricao;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private Set<Telefone> telefones = new HashSet<Telefone>();
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     private Set<Endereco> enderecos = new HashSet<Endereco>();
 

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "TELEFONES")
-@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "cliente"})
 public class Telefone extends GenericEntityImpl<Long> {
 
     private static final long serialVersionUID = 1L;
@@ -33,8 +33,7 @@ public class Telefone extends GenericEntityImpl<Long> {
     private String operadora;
 
     @NotNull
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 

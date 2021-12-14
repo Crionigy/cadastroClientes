@@ -117,6 +117,8 @@ fabric.properties
 # *.ipr
 newrelic
 newrelic/*
+/newrelic/
+/newrelic/*
 
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
@@ -160,3 +162,4 @@ buildNumber.properties
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij
+/newrelic/

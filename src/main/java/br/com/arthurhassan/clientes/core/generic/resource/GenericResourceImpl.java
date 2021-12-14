@@ -26,7 +26,11 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<T>> getPage(Pageable pageable) {
-        return ResponseEntity.ok().body(genericService.getPage(pageable));
+        try{
+            return ResponseEntity.ok().body(genericService.getPage(pageable));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, GenericEntityImpl.nameOf(getClass()).replace("Resource", ""));
+        }
     }
 
     @Override
@@ -35,7 +39,7 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
         try {
             return ResponseEntity.ok().body(genericService.findById(id));
         } catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, getClass().getSimpleName().replace("Resource", "") + "/" + id.toString());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, GenericEntityImpl.nameOf(getClass()).replace("Resource", "") + "/" + id.toString());
         }
 
     }
@@ -51,7 +55,7 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
 
             return ResponseEntity.created(uri).body(entity);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, getClass().getSimpleName().replace("Resource", ""));
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, GenericEntityImpl.nameOf(getClass()).replace("Resource", ""));
         }
     }
 
@@ -66,7 +70,7 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
             genericService.update(entity);
             return ResponseEntity.ok().body(entity);
         } catch (Exception e){
-            String reason = getClass().getSimpleName().replace("Resource", "") + "/" + entity.getId().toString();
+            String reason = GenericEntityImpl.nameOf(getClass()).replace("Resource", "") + "/" + entity.getId().toString();
             throw new ResponseStatusException(HttpStatus.CONFLICT, reason);
         }
     }
@@ -76,10 +80,9 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
     public ResponseEntity<String> deleteOne(@PathVariable("id") PK id) {
         try {
             genericService.deleteOne(id);
-            return new ResponseEntity("Sucesso ao apagar!", HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity("Erro ao apagar! - ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
     }
 
@@ -88,10 +91,9 @@ public class GenericResourceImpl<T extends GenericEntityImpl<PK>, PK> implements
     public ResponseEntity<String> deleteAll(@RequestBody List<PK> entityIds){
         try {
             genericService.deleteAll(entityIds);
-            return new ResponseEntity("Sucesso ao apagar!", HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity("Erro ao apagar! - ", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT);
         }
     }
 

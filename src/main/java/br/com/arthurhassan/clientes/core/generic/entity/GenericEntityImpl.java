@@ -71,4 +71,8 @@ public class GenericEntityImpl<PK> implements GenericEntity<PK>, Serializable {
     public PK getId() {
         return null;
     }
+
+    public static String nameOf(Object o) {
+        return o.getClass().getSimpleName();
+    }
 }

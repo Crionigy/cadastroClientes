@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.sql.Array;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -36,7 +37,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({ResponseStatusException.class})
     protected ResponseEntity handleResponseStatusException(ResponseStatusException exception, Locale locale){
         String messageName = this.exceptionPropetie + exception.getStatus().name().toLowerCase(Locale.ROOT);
-        String[] splitReason = exception.getReason().split("/");
+        String[] splitReason = exception.getReason().isEmpty() ? new String[0] : exception.getReason().split("/");
         Object[] args = Arrays.stream(splitReason).toArray();
 
         String message = messageSource.getMessage(messageName, args, locale);
